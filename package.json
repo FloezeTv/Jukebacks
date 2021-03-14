@@ -1,0 +1,115 @@
+{
+  "name": "jukebacks",
+  "version": "0.1.0",
+  "description": "A small jukebox that runs in the background and can be controlled from a webpage",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FloezeTv/Jukebacks.git"
+  },
+  "homepage": "https://github.com/FloezeTv/Jukebacks#readme",
+  "bugs": {
+    "url": "https://github.com/FloezeTv/Jukebacks/issues"
+  },
+  "scripts": {
+    "start:frontend": "webpack serve --mode development",
+    "start:backend": "nodemon src/backend/index.js",
+    "start:electron": "nodemon --watch index.js --watch src/backend --exec \"electron index.js\"",
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+    "build:icon": "electron-icon-builder -i icon.png -o build -f",
+    "build:frontend": "webpack --mode production",
+    "build:electron": "npm run build:icon && electron-builder",
+    "build": "npm run build:frontend && npm run build:electron"
+  },
+  "keywords": [
+    "jukebacks",
+    "jukebox",
+    "background",
+    "music"
+  ],
+  "author": "FloezeTv",
+  "license": "MIT",
+  "build": {
+    "directories": {
+      "output": "build/bin/"
+    },
+    "files": [
+      "index.js",
+      "src/globals.js",
+      "src/backend/**/*",
+      "build/frontend/**/*",
+      "icon.ico"
+    ],
+    "appId": "tv.floeze.jukebacks",
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        },
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ],
+      "icon": "build/icons/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false
+    },
+    "mac": {
+      "category": "public.app-category.music",
+      "icon": "build/icons/icon.icns"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64",
+            "ia32",
+            "arm64",
+            "armv7l"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64",
+            "ia32",
+            "arm64",
+            "armv7l"
+          ]
+        }
+      ],
+      "category": "Audio",
+      "icon": "build/icons/48x48.png"
+    }
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
+    "@babel/preset-react": "^7.12.13",
+    "babel-loader": "^8.2.2",
+    "concurrently": "^6.0.0",
+    "electron": "^12.0.1",
+    "electron-builder": "^22.10.5",
+    "electron-icon-builder": "^2.0.1",
+    "html-webpack-plugin": "^5.3.1",
+    "nodemon": "^2.0.7",
+    "webpack": "^5.24.4",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
